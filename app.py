@@ -106,7 +106,7 @@ def array_to_base64_png(arr, cmap=None, vmin=0.0, vmax=1.0):
     return base64.b64encode(buf.read()).decode("utf-8")
 
 
-@torch.no_grad()
+@torch.inference_mode()
 def restore(degraded_np):
     x = torch.from_numpy(degraded_np).unsqueeze(0).unsqueeze(0).to(device)
     restored, mix_weights, beta, scale = model(x)
