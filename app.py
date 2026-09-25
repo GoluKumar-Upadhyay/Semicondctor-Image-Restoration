@@ -36,6 +36,9 @@ app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_MB * 1024 * 1024
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print("CUDA available:", torch.cuda.is_available(), flush=True)
 print("Device:", device, flush=True)
+# Avoid CPU thread oversubscription on small Render instances.
+if device == "cpu":
+    torch.set_num_threads(1)
 model = None
 model_meta = {}
 model_load_error = None
